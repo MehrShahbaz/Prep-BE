@@ -1,5 +1,4 @@
-const mongoose = require("mongoose");
-const { Schema } = mongoose;
+import mongoose, { Schema } from "mongoose";
 
 const commentSchema = new Schema({
   fileId: { type: Schema.Types.ObjectId, ref: "File", required: true },
@@ -10,3 +9,5 @@ const commentSchema = new Schema({
 
 const Comment = mongoose.model("Comment", commentSchema);
 module.exports = Comment;
+
+export default Comment;
