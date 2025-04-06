@@ -9,6 +9,7 @@ import userRoutes from "./routes/userRoutes.js";
 import fileRoutes from "./routes/fileRoutes.js";
 import commentRoutes from "./routes/commentRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
+import { responseSerializer } from "./middleware/responseSerializer.js";
 
 dotenv.config();
 const app = express();
@@ -16,6 +17,7 @@ const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
+app.use(responseSerializer);
 
 // 🛠️ Resolve __dirname in ES module scope
 const __filename = fileURLToPath(import.meta.url);

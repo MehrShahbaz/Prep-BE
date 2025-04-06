@@ -18,7 +18,7 @@ export const uploadFile = async (req, res) => {
     });
 
     await file.save();
-    res.status(201).json(file);
+    res.serialize(file, fileSerializer);
   } catch (error) {
     // 👇 Delete the file if it was saved to disk but DB failed
     if (req.file && req.file.path) {
@@ -44,9 +44,7 @@ export const getAllFiles = async (req, res) => {
     }
 
     const files = await File.find({ userId }).populate("userId", "name email");
-    const serialized = files.map(fileSerializer);
-    res.status(200).json(serialized);
-    res.status(200).json(serialized);
+    res.serializeMany(files, fileSerializer);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
