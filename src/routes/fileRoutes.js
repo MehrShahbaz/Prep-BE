@@ -6,10 +6,12 @@ import {
   updateFileStatus,
 } from "../controllers/fileController.js";
 
+import { protect } from "../middleware/authMiddleware.js";
+
 const router = express.Router();
 
-router.post("/upload", upload.single("file"), uploadFile);
+router.post("/upload", protect, upload.single("file"), uploadFile);
 router.get("/", getAllFiles);
-router.patch("/:id", updateFileStatus);
+router.patch("/:id", protect, updateFileStatus);
 
 export default router;

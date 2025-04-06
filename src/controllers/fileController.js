@@ -59,6 +59,12 @@ export const updateFileStatus = async (req, res) => {
       return res.status(404).json({ message: "File not found" });
     }
 
+    if (file.userId.toString() !== req.user.id) {
+      return res
+        .status(403)
+        .json({ message: "Not authorized to update this file" });
+    }
+
     const validStatuses = ["pending", "approved", "needs_changes"];
     if (!validStatuses.includes(status)) {
       return res.status(400).json({ message: "Invalid status value" });
@@ -70,7 +76,6 @@ export const updateFileStatus = async (req, res) => {
         .json({ message: `File is already marked as ${status}` });
     }
 
-    // Lock file once it's approved or rejected unless resetting to pending
     if (
       ["approved", "needs_changes"].includes(file.status) &&
       status !== "pending"
@@ -88,3 +93,4 @@ export const updateFileStatus = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
