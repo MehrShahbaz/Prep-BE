@@ -2,6 +2,7 @@ import File from "../models/File.js";
 import fs from "fs";
 import path from "path";
 
+import { fileSerializer } from "../utils/serializers.js";
 export const uploadFile = async (req, res) => {
   try {
     const { originalname, filename, size, mimetype } = req.file;
@@ -43,7 +44,9 @@ export const getAllFiles = async (req, res) => {
     }
 
     const files = await File.find({ userId }).populate("userId", "name email");
-    res.status(200).json(files);
+    const serialized = files.map(fileSerializer);
+    res.status(200).json(serialized);
+    res.status(200).json(serialized);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

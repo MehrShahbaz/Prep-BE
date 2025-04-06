@@ -1,5 +1,7 @@
 import Comment from "../models/Comment.js";
 
+import { commentSerializer } from "../utils/serializers.js";
+
 export const createComment = async (req, res) => {
   try {
     const { fileId, userId, text } = req.body;
@@ -16,7 +18,7 @@ export const createComment = async (req, res) => {
   }
 };
 
-export const getCommentsById = async (req, res) => {
+export const getComments = async (req, res) => {
   try {
     const { fileId, userId } = req.query;
 
@@ -33,7 +35,7 @@ export const getCommentsById = async (req, res) => {
       "userId",
       "name email"
     );
-    res.status(200).json(comments);
+    res.status(200).json(comments.map(commentSerializer));
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
