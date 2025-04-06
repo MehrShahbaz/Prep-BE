@@ -7,6 +7,7 @@ import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import userRoutes from "./routes/userRoutes.js";
 import fileRoutes from "./routes/fileRoutes.js";
+import commentRoutes from "./routes/commentRoutes.js";
 
 dotenv.config();
 const app = express();
@@ -24,6 +25,7 @@ app.use("/uploads", express.static(path.resolve(__dirname, "uploads")));
 
 app.use("/api/users", userRoutes);
 app.use("/api/files", fileRoutes);
+app.use("/api/comments", commentRoutes);
 
 const start = async () => {
   try {
